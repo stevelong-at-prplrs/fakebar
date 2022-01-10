@@ -54,6 +54,7 @@ const DemoComponent = (): JSX.Element => {
             <h4>Content container</h4>
             <div
                 className="content-view-container"
+                onWheel={(e) => setContentScrollLeft(Math.max(0, Math.min( totalOverflowLength, contentScrollLeft + e.deltaX)))}
                 onMouseDown={(e) => setMouseDownVal(getMouseXPosInBoundingRect(e) + contentScrollLeft)}
                 onMouseUp={(e) => setMouseDownVal(undefined)}
                 onMouseMove={(e) => {
