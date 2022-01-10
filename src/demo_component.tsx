@@ -25,7 +25,8 @@ const DemoComponent = (): JSX.Element => {
     const maxVal = sliderTrackLength - halfSliderLength;
     const minMaxRange = maxVal - halfSliderLength;
     const rangeToOverflowRatio = minMaxRange / totalOverflowLength;
-    const sliderPosition = Math.min(maxSlideableDistance, Math.max(0, (contentScrollLeft / totalOverflowLength) * maxSlideableDistance)); // position of the scroll bar in its parent container is proportional to the position of the viewed portion of the content bar relative to the entire width of the content bar
+    const fractionScrolled = contentScrollLeft < totalOverflowLength ? contentScrollLeft / totalOverflowLength : 1;
+    const sliderPosition = Math.max(0, (fractionScrolled * maxSlideableDistance)); // position of the scroll bar in its parent container is proportional to the position of the viewed portion of the content strip over the entire width of the content strip
 
     const transformSliderBarVal = (num: number) => ((num <= halfSliderLength ? halfSliderLength : num >= maxVal ? maxVal : num) - halfSliderLength) / rangeToOverflowRatio;
 
