@@ -18,17 +18,17 @@ const DemoComponent = (): JSX.Element => {
     const contentViewWidth = 870; // may be set or retrieved from the rendered component
     const sliderTrackLength = 900;  // may be set or retrieved from the rendered component
     const viewToWidthRatio = contentViewWidth / contentWidth;
-    const totalOverflowLength = contentWidth - contentViewWidth;
+    const totalOverflow = contentWidth - contentViewWidth;
     const sliderLength = sliderTrackLength * viewToWidthRatio;  // width of slider to width of total bar is a ratio proportional to the ratio of the visible portion of the content bar over the entire width of the content bar
-    const maxSlideableDistance = sliderTrackLength - sliderLength;
+    const maxSlideableDist = sliderTrackLength - sliderLength;
     const halfSliderLength = sliderLength / 2;
-    const maxVal = sliderTrackLength - halfSliderLength;
-    const minMaxRange = maxVal - halfSliderLength;
-    const rangeToOverflowRatio = minMaxRange / totalOverflowLength;
-    const fractionScrolled = contentScrollLeft < totalOverflowLength ? contentScrollLeft / totalOverflowLength : 1;
-    const sliderPosition = Math.max(0, (fractionScrolled * maxSlideableDistance)); // position of the scroll bar in its parent container is proportional to the position of the viewed portion of the content strip over the entire width of the content strip
+    const maxSliderVal = sliderTrackLength - halfSliderLength;
+    const adjSliderRange = maxSliderVal - halfSliderLength;
+    const sliderRangeToOverflow = adjSliderRange / totalOverflow;
+    const fractionScrolled = contentScrollLeft < totalOverflow ? contentScrollLeft / totalOverflow : 1;
+    const sliderPosition = Math.max(0, (fractionScrolled * maxSlideableDist)); // position of the scroll bar in its parent container is proportional to the position of the viewed portion of the content strip over the entire width of the content strip
 
-    const transformSliderBarVal = (num: number) => ((num <= halfSliderLength ? halfSliderLength : num >= maxVal ? maxVal : num) - halfSliderLength) / rangeToOverflowRatio;
+    const transformSliderBarVal = (num: number) => ((num <= halfSliderLength ? halfSliderLength : num >= maxSliderVal ? maxSliderVal : num) - halfSliderLength) / sliderRangeToOverflow;
 
     const contentArr = [ // 11 items is 1100 px total width for the content
         "Content",
@@ -54,12 +54,12 @@ const DemoComponent = (): JSX.Element => {
             <h4>Content container</h4>
             <div
                 className="content-view-container"
-                onWheel={(e) => setContentScrollLeft(Math.max(0, Math.min( totalOverflowLength, contentScrollLeft + e.deltaX)))}
+                onWheel={(e) => setContentScrollLeft(Math.max(0, Math.min( totalOverflow, contentScrollLeft + e.deltaX)))}
                 onMouseDown={(e) => setMouseDownVal(getMouseXPosInBoundingRect(e) + contentScrollLeft)}
                 onMouseUp={(e) => setMouseDownVal(undefined)}
                 onMouseMove={(e) => {
                     if (mouseDownVal >= 0) {
-                        const newLeftVal = Math.min(totalOverflowLength, mouseDownVal - getMouseXPosInBoundingRect(e));
+                        const newLeftVal = Math.min(totalOverflow, mouseDownVal - getMouseXPosInBoundingRect(e));
                         setContentScrollLeft(Math.max(0, newLeftVal));                        
                     }
                 }}
