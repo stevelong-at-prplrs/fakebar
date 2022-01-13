@@ -8,7 +8,7 @@ const ContentItemGenerator = ({str}) => (
     </div>
 );
 
-const DemoComponent = (): JSX.Element => {
+const HorizontalScroller = (): JSX.Element => {
     
     const [mouseDownVal, setMouseDownVal] = React.useState<number>();
     const [mouseDownOnSlider, setMouseDownOnSlider] = React.useState(false);
@@ -46,7 +46,7 @@ const DemoComponent = (): JSX.Element => {
     
     return (
         <>
-            <h1>Demo Fakebar</h1>
+            <h1>Demo Fakebar - horizontal</h1>
             <br />
             <br />
             <br />
@@ -103,4 +103,4 @@ const DemoComponent = (): JSX.Element => {
     );
 }
 
-export default DemoComponent;
+export default HorizontalScroller;

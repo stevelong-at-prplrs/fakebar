@@ -3,12 +3,12 @@ import * as React from "react";
 const getMouseYPosInBoundingRect = event => event.clientY - event.currentTarget.getBoundingClientRect().top;
 
 const ContentItemGenerator = ({str}) => (
-    <div className="content-item-horiz">
+    <div className="content-item-vert">
         {str}
     </div>
 );
 
-const DemoComponentHorizonal = (): JSX.Element => {
+const VerticalScroller = ({ setScrollLock }): JSX.Element => {
     
     const [mouseDownVal, setMouseDownVal] = React.useState<number>();
     const [mouseDownOnSlider, setMouseDownOnSlider] = React.useState(false);
@@ -75,7 +75,7 @@ const DemoComponentHorizonal = (): JSX.Element => {
     
     return (
         <>
-            <h1>Demo Fakebar - horizonal</h1>
+            <h1>Demo Fakebar - vertical</h1>
             <br />
             <br />
             <br />
@@ -84,7 +84,9 @@ const DemoComponentHorizonal = (): JSX.Element => {
             <div className="row">
                 <div className="col">
                     <div
-                    className="content-view-container-horiz"
+                    className="content-view-container-vert"
+                    onMouseOver={() => setScrollLock(true)}
+                    onMouseOut={() => setScrollLock(false)}
                     onWheel={(e) => setContentScrollTop(Math.max(0, Math.min( totalOverflow, contentScrollTop + e.deltaY)))}
                     onMouseDown={(e) => setMouseDownVal(getMouseYPosInBoundingRect(e) + contentScrollTop)}
                     onMouseUp={(e) => setMouseDownVal(undefined)}
@@ -95,7 +97,7 @@ const DemoComponentHorizonal = (): JSX.Element => {
                         }
                     }}
                     style={{ height: contentViewHeight }}>
-                        <div className="content-wrapper-horiz" /* Content Wrapper */
+                        <div className="content-wrapper-vert" /* Content Wrapper */
                             style={{
                                 height: contentHeight,
                                 top: -contentScrollTop
@@ -107,7 +109,7 @@ const DemoComponentHorizonal = (): JSX.Element => {
                 </div>
                 <div className="col-1">
                     <div
-                        className="slider-track-horiz"
+                        className="slider-track-vert"
                         onMouseDown={(e) => {
                             setMouseDownOnSlider(true);
                             // set content scroll top such that the slider's midpoint will be where the user clicked, if possible
@@ -125,7 +127,7 @@ const DemoComponentHorizonal = (): JSX.Element => {
                             height: sliderTrackLength
                             }}>
                         <div
-                            className="slider-horiz"
+                            className="slider-vert"
                             style={{
                                 height: sliderLength,
                                 top: sliderPosition
@@ -137,4 +139,4 @@ const DemoComponentHorizonal = (): JSX.Element => {
     );
 }
 
-export default DemoComponentHorizonal;
+export default VerticalScroller;

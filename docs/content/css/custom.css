@@ -36,7 +36,7 @@
     user-select: none;
 }
 
-.content-view-container-horiz {
+.content-view-container-vert {
     height: 50vh;
     /* width: 50vw; */
     margin-bottom: 2rem;
@@ -46,13 +46,13 @@
     overflow-y: hidden;
 }
 
-.content-wrapper-horiz {
+.content-wrapper-vert {
     /* width: 100%; */
     height: 150px;
     position: relative;
 }
 
-.content-item-horiz {
+.content-item-vert {
     /* width: 98px; */
     /* height: 100%; */
     background-color: lightcyan;
@@ -61,7 +61,7 @@
     user-select: none;
 }
 
-.slider-track-horiz {
+.slider-track-vert {
     width: 1.5rem;
     margin-bottom: 2rem;
     outline-color: red;
@@ -69,7 +69,7 @@
     background-color: lightcoral;
 }
 
-.slider-horiz {
+.slider-vert {
     width: 100%;
     position: relative;
     background-color: white;
