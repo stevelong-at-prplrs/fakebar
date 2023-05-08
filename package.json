@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "browser": "docs/index.html",
   "scripts": {
+    "build": "webpack --config webpack-config.js --node-env=production --output-path docs",
+    "dev": "webpack-dev-server --config webpack-config.js --output-path docs --hot",
     "serve": "serve docs",
-    "webpack-watch": "webpack --config webpack-config.js",
-    "bs": "gulp browser-sync",
-    "dev": "concurrently \"npm run bs\" \"npm run webpack-watch\""
+    "ts": "tsc --noEmit"
   },
   "dependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
