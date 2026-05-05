@@ -1,8 +1,8 @@
 import * as React from "react";
 
-const getMouseXPosInBoundingRect = event => event.clientX - event.currentTarget.getBoundingClientRect().left;
+const getMouseXPosInBoundingRect = (event: React.MouseEvent<HTMLDivElement>) => event.clientX - event.currentTarget.getBoundingClientRect().left;
 
-const ContentItemGenerator = ({str}) => (
+const ContentItemGenerator = ({str}: {str: string}) => (
     <div className="content-item">
         {str}
     </div>
@@ -30,19 +30,7 @@ const HorizontalScroller = (): JSX.Element => {
 
     const transformSliderBarVal = (num: number) => ((num <= halfSliderLength ? halfSliderLength : num >= maxSliderVal ? maxSliderVal : num) - halfSliderLength) / sliderRangeToOverflow;
 
-    const contentArr = [ // 11 items is 1100 px total width for the content
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content"
-    ];
+    const contentArr = [...Array(11)].map(item => "Content");
     
     return (
         <>
@@ -58,7 +46,7 @@ const HorizontalScroller = (): JSX.Element => {
                 onMouseDown={(e) => setMouseDownVal(getMouseXPosInBoundingRect(e) + contentScrollLeft)}
                 onMouseUp={(e) => setMouseDownVal(undefined)}
                 onMouseMove={(e) => {
-                    if (mouseDownVal >= 0) {
+                    if (mouseDownVal !== undefined && mouseDownVal >= 0) {
                         const newLeftVal = Math.min(totalOverflow, mouseDownVal - getMouseXPosInBoundingRect(e));
                         setContentScrollLeft(Math.max(0, newLeftVal));                        
                     }

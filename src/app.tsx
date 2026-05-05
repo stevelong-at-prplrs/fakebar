@@ -1,5 +1,5 @@
 import * as React from "react";
-import HorizontalScroller from "./demo_component";
+import HorizontalScroller from "./horizontal_scroller";
 import VerticalScroller from "./vertical_scroller";
 
 export const App = (): JSX.Element => {

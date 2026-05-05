@@ -1,61 +1,21 @@
 import * as React from "react";
 
-const getMouseYPosInBoundingRect = event => event.clientY - event.currentTarget.getBoundingClientRect().top;
+const getMouseYPosInBoundingRect = (event: React.MouseEvent<HTMLDivElement>) => event.clientY - event.currentTarget.getBoundingClientRect().top;
 
-const ContentItemGenerator = ({str}) => (
+const ContentItemGenerator = ({str}: {str: string}) => (
     <div className="content-item-vert">
         {str}
     </div>
 );
 
-const VerticalScroller = ({ setScrollLock }): JSX.Element => {
+const VerticalScroller = ({ setScrollLock }: { setScrollLock: (lock: boolean) => void }): JSX.Element => {
     
     const [mouseDownVal, setMouseDownVal] = React.useState<number>();
     const [mouseDownOnSlider, setMouseDownOnSlider] = React.useState(false);
     const [contentScrollTop, setContentScrollTop] = React.useState(0);
 
-    const contentArr = [ // 40 items tall times 1.5 rem (24 px each) = 240 x 4 = 800 + 160 = 960
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-        "Content",
-    ];
+    const contentArr = [...Array(40)].map(item => "Content");
+
 
     const contentHeight = contentArr.length * 24; // this should be calculated from the individual content widths or retrieved from the width of the rendered content wrapper.
     const contentViewHeight = 870; // may be set or retrieved from the rendered component
@@ -91,7 +51,7 @@ const VerticalScroller = ({ setScrollLock }): JSX.Element => {
                     onMouseDown={(e) => setMouseDownVal(getMouseYPosInBoundingRect(e) + contentScrollTop)}
                     onMouseUp={(e) => setMouseDownVal(undefined)}
                     onMouseMove={(e) => {
-                        if (mouseDownVal >= 0) {
+                        if (mouseDownVal !== undefined && mouseDownVal >= 0) {
                             const newLeftVal = Math.min(totalOverflow, mouseDownVal - getMouseYPosInBoundingRect(e));
                             setContentScrollTop(Math.max(0, newLeftVal));                        
                         }

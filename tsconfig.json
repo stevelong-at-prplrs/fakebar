@@ -11,10 +11,11 @@
             "DOM",
             "ESNext"
         ],
-        "outDir": "./dist",
+        "rootDir": "/",
+        "outDir": "/docs",
         "declaration": false,
         "jsx": "react",
-        "baseUrl": "."
+        // "baseUrl": "."
     },
     "include": ["src", "examples/**/*", "."]
 }
