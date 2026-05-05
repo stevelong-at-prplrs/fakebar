@@ -27,6 +27,18 @@ const Scroller = ({
     const [mouseDownVal, setMouseDownVal] = React.useState<number>();
     const [mouseDownOnSlider, setMouseDownOnSlider] = React.useState(false);
     const [contentScroll, setContentScroll] = React.useState(0);
+    const [isScrolling, setIsScrolling] = React.useState(false);
+
+    const isFirstRender = React.useRef(true);
+    React.useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+        setIsScrolling(true);
+        const timeout = setTimeout(() => setIsScrolling(false), 1000);
+        return () => clearTimeout(timeout);
+    }, [contentScroll]);
 
     const getMousePosInBoundingRect = (event: React.MouseEvent<HTMLDivElement>) => {
         const rect = event.currentTarget.getBoundingClientRect();
@@ -62,9 +74,13 @@ const Scroller = ({
     const trackStyle: React.CSSProperties = isHorizontal
         ? { width: sliderTrackLength, position: "absolute", bottom: 0, left: 0 }
         : { height: sliderTrackLength, position: "absolute", top: 0, right: 0 };
-    const sliderStyle: React.CSSProperties = isHorizontal
-        ? { width: sliderLength, left: sliderPosition }
-        : { height: sliderLength, top: sliderPosition };
+    const sliderStyle: React.CSSProperties = {
+        ...(isHorizontal
+            ? { width: sliderLength, left: sliderPosition }
+            : { height: sliderLength, top: sliderPosition }),
+        opacity: isScrolling ? 1 : 0,
+        transition: "opacity 150ms",
+    };
 
     const contentView = (
         <div
