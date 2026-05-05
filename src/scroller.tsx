@@ -59,7 +59,9 @@ const Scroller = ({
     const wrapperStyle: React.CSSProperties = isHorizontal
         ? { width: contentSize, left: -contentScroll }
         : { height: contentSize, top: -contentScroll };
-    const trackStyle: React.CSSProperties = isHorizontal ? { width: sliderTrackLength } : { height: sliderTrackLength };
+    const trackStyle: React.CSSProperties = isHorizontal
+        ? { width: sliderTrackLength, position: "absolute", bottom: 0, left: 0 }
+        : { height: sliderTrackLength, position: "absolute", top: 0, right: 0 };
     const sliderStyle: React.CSSProperties = isHorizontal
         ? { width: sliderLength, left: sliderPosition }
         : { height: sliderLength, top: sliderPosition };
@@ -116,17 +118,10 @@ const Scroller = ({
             <br />
             <br />
             <h4>Content container</h4>
-            {isHorizontal ? (
-                <>
-                    {contentView}
-                    {sliderTrack}
-                </>
-            ) : (
-                <div className="row">
-                    <div className="col">{contentView}</div>
-                    <div className="col-1">{sliderTrack}</div>
-                </div>
-            )}
+            <div style={{ position: "relative", display: "block" }}>
+                {contentView}
+                {sliderTrack}
+            </div>
         </>
     );
 };

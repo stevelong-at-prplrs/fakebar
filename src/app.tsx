@@ -20,7 +20,7 @@ export const App = (): JSX.Element => {
     }, [scrollLock]);
 
     return (
-        <div className="container">
+        <div className="container" style={{ marginBottom: "2rem"}}>
             <Scroller
                 orientation="vertical"
                 title="Demo Fakebar - vertical"
