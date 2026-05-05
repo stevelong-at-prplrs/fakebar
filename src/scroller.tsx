@@ -51,7 +51,11 @@ const Scroller = ({
         ? { view: "content-view-container", wrapper: "content-wrapper", item: "content-item", track: "slider-track", slider: "slider" }
         : { view: "content-view-container-vert", wrapper: "content-wrapper-vert", item: "content-item-vert", track: "slider-track-vert", slider: "slider-vert" };
 
-    const viewStyle: React.CSSProperties = isHorizontal ? { width: contentViewSize } : { height: contentViewSize };
+    const isDragging = mouseDownVal !== undefined;
+    const viewStyle: React.CSSProperties = {
+        ...(isHorizontal ? { width: contentViewSize } : { height: contentViewSize }),
+        cursor: isDragging ? "grabbing" : "grab",
+    };
     const wrapperStyle: React.CSSProperties = isHorizontal
         ? { width: contentSize, left: -contentScroll }
         : { height: contentSize, top: -contentScroll };
