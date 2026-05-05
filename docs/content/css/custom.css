@@ -37,7 +37,7 @@
 }
 
 .content-view-container-vert {
-    height: 50vh;
+    /* height: 50vh; */
     /* width: 50vw; */
     margin-bottom: 2rem;
     outline-color: red;

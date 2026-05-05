@@ -1,6 +1,8 @@
 import * as React from "react";
-import HorizontalScroller from "./horizontal_scroller";
-import VerticalScroller from "./vertical_scroller";
+import Scroller from "./scroller";
+
+const verticalContent = [...Array(40)].map(() => "Content");
+const horizontalContent = [...Array(11)].map(() => "Content");
 
 export const App = (): JSX.Element => {
     const [scrollLock, setScrollLock] = React.useState(false);
@@ -16,11 +18,26 @@ export const App = (): JSX.Element => {
             }
         }
     }, [scrollLock]);
-    
+
     return (
         <div className="container">
-            <VerticalScroller setScrollLock={setScrollLock} />
-            <HorizontalScroller />
+            <Scroller
+                orientation="vertical"
+                title="Demo Fakebar - vertical"
+                contentItems={verticalContent}
+                contentSize={verticalContent.length * 24}
+                contentViewSize={500}
+                sliderTrackLength={500}
+                setScrollLock={setScrollLock}
+            />
+            <Scroller
+                orientation="horizontal"
+                title="Demo Fakebar - horizontal"
+                contentItems={horizontalContent}
+                contentSize={horizontalContent.length * 100}
+                contentViewSize={500}
+                sliderTrackLength={500}
+            />
         </div>
     );
 }
