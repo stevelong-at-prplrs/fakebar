@@ -9,7 +9,6 @@ interface ScrollerProps {
     contentSize: number;
     viewWidth?: number;
     viewHeight?: number;
-    setScrollLock?: (lock: boolean) => void;
 }
 
 const Scroller = ({
@@ -19,7 +18,6 @@ const Scroller = ({
     contentSize,
     viewWidth,
     viewHeight,
-    setScrollLock,
 }: ScrollerProps): JSX.Element => {
 
     const isHorizontal = orientation === "horizontal";
@@ -77,6 +75,18 @@ const Scroller = ({
     const transformSliderBarVal = (num: number) =>
         ((num <= halfSliderLength ? halfSliderLength : num >= maxSliderVal ? maxSliderVal : num) - halfSliderLength) / sliderRangeToOverflow;
 
+    React.useEffect(() => {
+        const el = contentViewRef.current;
+        if (!el) return;
+        const onWheel = (e: WheelEvent) => {
+            e.preventDefault();
+            const delta = isHorizontal ? e.deltaX : e.deltaY;
+            setContentScroll((prev) => Math.max(0, Math.min(totalOverflow, prev + delta)));
+        };
+        el.addEventListener("wheel", onWheel, { passive: false });
+        return () => el.removeEventListener("wheel", onWheel);
+    }, [isHorizontal, totalOverflow]);
+
     const classes = isHorizontal
         ? { view: "content-view-container", wrapper: "content-wrapper", item: "content-item", track: "slider-track", slider: "slider" }
         : { view: "content-view-container-vert", wrapper: "content-wrapper-vert", item: "content-item-vert", track: "slider-track-vert", slider: "slider-vert" };
@@ -115,9 +125,6 @@ const Scroller = ({
         <div
             ref={contentViewRef}
             className={classes.view}
-            onMouseOver={setScrollLock ? () => setScrollLock(true) : undefined}
-            onMouseOut={setScrollLock ? () => setScrollLock(false) : undefined}
-            onWheel={(e) => setContentScroll(Math.max(0, Math.min(totalOverflow, contentScroll + (isHorizontal ? e.deltaX : e.deltaY))))}
             onMouseDown={(e) => setMouseDownVal(getMousePosInBoundingRect(e) + contentScroll)}
             onMouseUp={() => setMouseDownVal(undefined)}
             onMouseMove={(e) => {

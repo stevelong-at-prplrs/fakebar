@@ -5,20 +5,6 @@ const verticalContent = [...Array(40)].map(() => "Content");
 const horizontalContent = [...Array(11)].map(() => "Content");
 
 export const App = (): JSX.Element => {
-    const [scrollLock, setScrollLock] = React.useState(false);
-
-    React.useLayoutEffect(() => {
-        if (scrollLock) {
-            // Get original body overflow
-            const originalOverflowStyle = window.getComputedStyle(document.body).overflowY;
-            document.body.style.overflowY = 'hidden';   // simple method of disabling scroll
-            // Re-enable scrolling when callback is invoked by returning a callback.
-            return (): void => {
-                document.body.style.overflowY = originalOverflowStyle; // if the original style on body was "overlay" then there shouldn't be any layout thrashing.
-            }
-        }
-    }, [scrollLock]);
-
     return (
         <div className="container" style={{ marginBottom: "2rem"}}>
             <Scroller
@@ -26,7 +12,6 @@ export const App = (): JSX.Element => {
                 title="Demo Fakebar - vertical"
                 contentItems={verticalContent}
                 contentSize={verticalContent.length * 24}
-                setScrollLock={setScrollLock}
                 viewHeight={500}
             />
             <Scroller
@@ -36,7 +21,6 @@ export const App = (): JSX.Element => {
                 contentSize={horizontalContent.length * 100}
                 viewWidth={500}
                 viewHeight={100}
-                setScrollLock={setScrollLock}
             />
         </div>
     );
