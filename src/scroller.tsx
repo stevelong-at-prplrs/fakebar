@@ -41,8 +41,8 @@ const Scroller = ({
     }, []);
 
     const contentViewSize = isHorizontal
-        ? (viewWidth ?? measured.width)
-        : (viewHeight ?? measured.height);
+        ? (measured.width || viewWidth || 0)
+        : (measured.height || viewHeight || 0);
     const sliderTrackLength = contentViewSize;
 
     const isFirstRender = React.useRef(true);

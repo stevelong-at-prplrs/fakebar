@@ -19,7 +19,7 @@ export const App = (): JSX.Element => {
                 title="Demo Fakebar - horizontal"
                 contentItems={horizontalContent}
                 contentSize={horizontalContent.length * 100}
-                viewWidth={500}
+                viewWidth={800}
                 viewHeight={100}
             />
         </div>

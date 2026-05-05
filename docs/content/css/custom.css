@@ -5,6 +5,7 @@
     outline-style: solid;
     background-color: lightcoral;
     overflow-x: hidden;
+    max-width: 100%;
 }
 
 .content-wrapper {
@@ -22,7 +23,7 @@
 }
 
 /* .slider-track {
-    height: 1.5rem;
+    max-width: 100%;
 } */
 
 .slider {
