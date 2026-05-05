@@ -7,7 +7,8 @@ interface ScrollerProps {
     title: string;
     contentItems: string[];
     contentSize: number;
-    contentViewSize: number;
+    viewWidth?: number;
+    viewHeight?: number;
     setScrollLock?: (lock: boolean) => void;
 }
 
@@ -16,11 +17,10 @@ const Scroller = ({
     title,
     contentItems,
     contentSize,
-    contentViewSize,
+    viewWidth,
+    viewHeight,
     setScrollLock,
 }: ScrollerProps): JSX.Element => {
-
-    const sliderTrackLength = contentViewSize;
 
     const isHorizontal = orientation === "horizontal";
 
@@ -28,6 +28,24 @@ const Scroller = ({
     const [mouseDownOnSlider, setMouseDownOnSlider] = React.useState(false);
     const [contentScroll, setContentScroll] = React.useState(0);
     const [isScrolling, setIsScrolling] = React.useState(false);
+    const [measured, setMeasured] = React.useState({ width: 0, height: 0 });
+
+    const contentViewRef = React.useRef<HTMLDivElement>(null);
+    React.useLayoutEffect(() => {
+        const el = contentViewRef.current;
+        if (!el) return;
+        const observer = new ResizeObserver((entries) => {
+            const { width, height } = entries[0].contentRect;
+            setMeasured({ width, height });
+        });
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    const contentViewSize = isHorizontal
+        ? (viewWidth ?? measured.width)
+        : (viewHeight ?? measured.height);
+    const sliderTrackLength = contentViewSize;
 
     const isFirstRender = React.useRef(true);
     React.useEffect(() => {
@@ -64,8 +82,19 @@ const Scroller = ({
         : { view: "content-view-container-vert", wrapper: "content-wrapper-vert", item: "content-item-vert", track: "slider-track-vert", slider: "slider-vert" };
 
     const isDragging = mouseDownVal !== undefined;
+    const widthStyle: React.CSSProperties = viewWidth !== undefined
+        ? { width: viewWidth }
+        : isHorizontal
+            ? { width: "100%", maxWidth: contentSize }
+            : { width: "100%" };
+    const heightStyle: React.CSSProperties = viewHeight !== undefined
+        ? { height: viewHeight }
+        : isHorizontal
+            ? { height: "100%" }
+            : { height: "100%", maxHeight: contentSize };
     const viewStyle: React.CSSProperties = {
-        ...(isHorizontal ? { width: contentViewSize } : { height: contentViewSize }),
+        ...widthStyle,
+        ...heightStyle,
         cursor: isDragging ? "grabbing" : "grab",
     };
     const wrapperStyle: React.CSSProperties = isHorizontal
@@ -84,6 +113,7 @@ const Scroller = ({
 
     const contentView = (
         <div
+            ref={contentViewRef}
             className={classes.view}
             onMouseOver={setScrollLock ? () => setScrollLock(true) : undefined}
             onMouseOut={setScrollLock ? () => setScrollLock(false) : undefined}

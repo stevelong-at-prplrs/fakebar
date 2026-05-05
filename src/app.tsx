@@ -26,15 +26,17 @@ export const App = (): JSX.Element => {
                 title="Demo Fakebar - vertical"
                 contentItems={verticalContent}
                 contentSize={verticalContent.length * 24}
-                contentViewSize={500}
                 setScrollLock={setScrollLock}
+                viewHeight={500}
             />
             <Scroller
                 orientation="horizontal"
                 title="Demo Fakebar - horizontal"
                 contentItems={horizontalContent}
                 contentSize={horizontalContent.length * 100}
-                contentViewSize={500}
+                viewWidth={500}
+                viewHeight={100}
+                setScrollLock={setScrollLock}
             />
         </div>
     );
