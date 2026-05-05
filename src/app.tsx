@@ -27,7 +27,6 @@ export const App = (): JSX.Element => {
                 contentItems={verticalContent}
                 contentSize={verticalContent.length * 24}
                 contentViewSize={500}
-                sliderTrackLength={500}
                 setScrollLock={setScrollLock}
             />
             <Scroller
@@ -36,7 +35,6 @@ export const App = (): JSX.Element => {
                 contentItems={horizontalContent}
                 contentSize={horizontalContent.length * 100}
                 contentViewSize={500}
-                sliderTrackLength={500}
             />
         </div>
     );

@@ -8,7 +8,6 @@ interface ScrollerProps {
     contentItems: string[];
     contentSize: number;
     contentViewSize: number;
-    sliderTrackLength: number;
     setScrollLock?: (lock: boolean) => void;
 }
 
@@ -18,9 +17,10 @@ const Scroller = ({
     contentItems,
     contentSize,
     contentViewSize,
-    sliderTrackLength,
     setScrollLock,
 }: ScrollerProps): JSX.Element => {
+
+    const sliderTrackLength = contentViewSize;
 
     const isHorizontal = orientation === "horizontal";
 
